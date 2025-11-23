@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEI Comunitario – ENS Gabriela Mistral</title>
+
+<style>
+/* ---------- ESTILO GENERAL ---------- */
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #f2f4f8;
+}
+header {
+    background: #003f91;
+    color: white;
+    padding: 25px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+}
+#logo {
+    width: 120px;
+    display: block;
+    margin: 0 auto 10px auto;
+}
+.subtitulo {
+    text-align: center;
+    font-size: 14px;
+    margin-top: -10px;
+    color: #e0e0e0;
+    letter-spacing: 1px;
+}
+
+/* Caja general */
+.container {
+    padding: 20px;
+}
+
+/* ---------- BOTONES DE SECCIONES ---------- */
+.section-btn {
+    width: 100%;
+    background: white;
+    border: 3px solid #003f91;
+    color: #003f91;
+    padding: 15px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.3s;
+}
+.section-btn:hover {
+    background: #003f91;
+    color: white;
+}
+
+.section-content {
+    display: none;
+    background: white;
+    padding: 15px;
+    border-left: 3px solid #003f91;
+    border-right: 3px solid #003f91;
+    border-bottom: 3px solid #003f91;
+    border-radius: 0 0 10px 10px;
+    margin-bottom: 12px;
+}
+
+/* ---------- MAPA INTERACTIVO ---------- */
+.map-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+.chip {
+    background: #003f91;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+.chip:hover {
+    background: #0056c9;
+}
+.chip-info {
+    display: none;
+    background: white;
+    border-left: 4px solid #003f91;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    animation: fadeIn 0.3s;
+}
+
+/* ---------- ENCUESTA ---------- */
+.survey-box {
+    background: white;
+    border: 3px solid #003f91;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+}
+.option-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px;
+    background: #003f91;
+    color:white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.option-btn:hover {
+    background: #0056c9;
+}
+
+.results {
+    margin-top: 20px;
+    display: none;
+}
+.bar {
+    height: 22px;
+    background: #0056c9;
+    border-radius: 8px;
+    transition: 0.4s;
+}
+
+/* Botón PDF */
+#downloadBtn {
+    background: #ffc400;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+}
+#downloadBtn:hover {
+    background: #ffb700;
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+    background: #003f91;
+    color: white;
+    text-align: center;
+    padding: 18px;
+    margin-top: 30px;
+    font-size: 14px;
+}
+
+/* Animación */
+@keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img id="logo" src="https://i.imgur.com/IRkh5xL.png">
+    PEI COMUNITARIO – ENS Gabriela Mistral
+    <div class="subtitulo">Presentación Interactiva</div>
+</header>
+
+<div class="container">
+
+<h2>📘 Explorador Interactivo del PEI Comunitario</h2>
+
+<!-- Secciones reales del PEI -->
+<button class="section-btn" onclick="toggleSection('s1')">Componentes comunitarios</button>
+<div id="s1" class="section-content">
+    <p>Formación con conciencia social, trabajo comunitario, alianzas, inclusión y enfoque amazónico.</p>
+</div>
+
+<button class="section-btn" onclick="toggleSection('s2')">Organizaciones activas del Bajo Putumayo</button>
+<div id="s2" class="section-content">
+    <p>Mujeres tejedoras, memoria histórica, autoridades étnicas, organizaciones ambientales y más.</p>
+</div>
+
+<button class="section-btn" onclick="toggleSection('s3')">Medios, sindicatos e instituciones</button>
+<div id="s3" class="section-content">
+    <p>Emisoras comunitarias, USO, Casa de la Cultura, parroquias, CLOPAD, Cruz Roja, Ejército, Policía, etc.</p>
+</div>
+
+<button class="section-btn" onclick="toggleSection('s4')">Estrategias culturales y pedagógicas</button>
+<div id="s4" class="section-content">
+    <p>Interculturalidad, festividades, medicina tradicional, minga, identidad amazónica y diversidad cultural.</p>
+</div>
+
+<button class="section-btn" onclick="toggleSection('s5')">Proyectos, semilleros y convenios</button>
+<div id="s5" class="section-content">
+    <p>CRECE, PTA, transversales, emprendimiento, PFC, SENA, UNISALLE, Corpoamazonía, ENSUP.</p>
+</div>
+
+<hr>
+
+<h2>🗺️ Mapa Vivo del PEI Comunitario</h2>
+
+<div class="map-grid">
+    <div class="chip" onclick="showInfo('m1')">SENA</div>
+    <div class="chip" onclick="showInfo('m2')">Corpoamazonía</div>
+    <div class="chip" onclick="showInfo('m3')">UNISALLE</div>
+    <div class="chip" onclick="showInfo('m4')">M. tejedoras</div>
+    <div class="chip" onclick="showInfo('m5')">FEDECAP</div>
+    <div class="chip" onclick="showInfo('m6')">Hospital</div>
+    <div class="chip" onclick="showInfo('m7')">Cruz Roja</div>
+    <div class="chip" onclick="showInfo('m8')">Bomberos</div>
+</div>
+
+<div id="m1" class="chip-info">Articulación técnica y formación profesional.</div>
+<div id="m2" class="chip-info">Biodiversidad, educación ambiental y Amazonía.</div>
+<div id="m3" class="chip-info">Investigación, formación docente y proyección social.</div>
+<div id="m4" class="chip-info">Red comunitaria de paz y fortalecimiento social.</div>
+<div id="m5" class="chip-info">Organización afro del Bajo Putumayo.</div>
+<div id="m6" class="chip-info">Programas de salud, prevención y bienestar.</div>
+<div id="m7" class="chip-info">Primeros auxilios, emergencias y formación.</div>
+<div id="m8" class="chip-info">Gestión del riesgo y atención a emergencias.</div>
+
+<hr>
+
+<h2>📊 Encuesta Interactiva</h2>
+
+<div class="survey-box">
+    <p><b>¿Qué estrategia debe fortalecerse primero?</b></p>
+
+    <button class="option-btn" onclick="vote(0)">Inclusión (PIAR)</button>
+    <button class="option-btn" onclick="vote(1)">Convenios y aliados</button>
+    <button class="option-btn" onclick="vote(2)">Proyectos transversales</button>
+    <button class="option-btn" onclick="vote(3)">Emprendimiento</button>
+
+    <div id="results" class="results">
+        <h3>Resultados en vivo</h3>
+        <div>Inclusión: <div id="bar0" class="bar"></div></div>
+        <div>Convenios: <div id="bar1" class="bar"></div></div>
+        <div>Transversales: <div id="bar2" class="bar"></div></div>
+        <div>Emprendimiento: <div id="bar3" class="bar"></div></div>
+
+        <button id="downloadBtn" onclick="downloadPDF()">Descargar resultados en PDF</button>
+    </div>
+</div>
+
+</div>
+
+<footer>
+    ENS Gabriela Mistral – Presentación Interactiva del PEI Comunitario  
+    <br>Diseñada por: Prof. Segundo Eduardo Rueda
+</footer>
+
+<script>
+/* --------- TOGGLE SECCIONES --------- */
+function toggleSection(id){
+    const sec = document.getElementById(id);
+    sec.style.display = sec.style.display === "block" ? "none" : "block";
+}
+
+/* --------- MAPA INTERACTIVO --------- */
+function showInfo(id){
+    document.querySelectorAll(".chip-info").forEach(e=>e.style.display="none");
+    document.getElementById(id).style.display="block";
+}
+
+/* --------- ENCUESTA --------- */
+let votes = [0,0,0,0];
+
+function vote(i){
+    votes[i]++;
+    document.getElementById("results").style.display = "block";
+    updateBars();
+}
+
+function updateBars(){
+    const total = votes.reduce((a,b)=>a+b,0);
+    for(let i=0;i<4;i++){
+        let percent = total ? (votes[i]/total)*100 : 0;
+        document.getElementById("bar"+i).style.width = percent + "%";
+    }
+}
+
+/* --------- PDF --------- */
+function downloadPDF(){
+    const content = `
+RESULTADOS DE LA ENCUESTA PEI COMUNITARIO
+
+Inclusión (PIAR): ${votes[0]} voto(s)
+Convenios y aliados: ${votes[1]} voto(s)
+Proyectos transversales: ${votes[2]} voto(s)
+Emprendimiento: ${votes[3]} voto(s)
+
+Generado automáticamente por la WebApp Interactiva del PEI.
+    `;
+    const blob = new Blob([content], {type: "text/plain"});
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "resultados_encuesta_pei.txt";
+    link.click();
+}
+</script>
+
+</body>
+</html>
