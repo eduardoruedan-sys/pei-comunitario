@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEI Comunitario – ENS Gabriela Mistral</title>
+<style>
+/* ---------- ESTILO GENERAL ---------- */
+body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    background: #f2f4f8;
+}
+header {
+    background: #003f91;
+    color: white;
+    padding: 24px 16px;
+    text-align: center;
+}
+header h1 {
+    margin: 8px 0 0 0;
+    font-size: 24px;
+}
+#logo {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ffffff55;
+}
+.subtitulo {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 4px;
+    color: #e0e0e0;
+    letter-spacing: 1px;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 16px;
+}
+
+/* ---------- TARJETA DE INTRO ---------- */
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    margin-bottom: 18px;
+}
+.card h2 {
+    margin-top: 0;
+}
+
+/* ---------- BOTONES DE SECCIONES ---------- */
+.section-btn {
+    width: 100%;
+    background: #ffffff;
+    border: 2px solid #003f91;
+    color: #003f91;
+    padding: 12px 14px;
+    margin-bottom: 6px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.25s;
+}
+.section-btn span.icon {
+    font-size: 18px;
+}
+.section-btn:hover {
+    background: #003f91;
+    color: #ffffff;
+}
+
+.section-content {
+    display: none;
+    background: #ffffff;
+    padding: 14px;
+    border-left: 2px solid #003f91;
+    border-right: 2px solid #003f91;
+    border-bottom: 2px solid #003f91;
+    border-radius: 0 0 10px 10px;
+    margin-bottom: 10px;
+    animation: fadeIn 0.25s ease-in;
+}
+.section-content ul {
+    padding-left: 20px;
+}
+
+/* ---------- MAPA INTERACTIVO ---------- */
+.map-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(120px,1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+.chip {
+    background: #003f91;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    transition: 0.2s;
+}
+.chip:hover {
+    background: #0056c9;
+    transform: translateY(-1px);
+}
+.chip-info {
+    display: none;
+    background: #ffffff;
+    border-left: 4px solid #003f91;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* ---------- ENCUESTA ---------- */
+.survey-box {
+    background: #ffffff;
+    border: 2px solid #003f91;
+    border-radius: 12px;
+    padding: 14px;
+}
+.option-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+    background: #003f91;
+    color:white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.25s;
+}
+.option-btn:hover {
+    background: #0056c9;
+}
+.results {
+    margin-top: 16px;
+    display: none;
+}
+.results-row {
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+.bar-wrapper {
+    background: #e3e7f1;
+    border-radius: 999px;
+    overflow: hidden;
+    height: 18px;
+}
+.bar {
+    height: 18px;
+    background: #ffc400;
+    border-radius: 999px;
+    transition: width 0.35s;
+}
+#downloadBtn, #resetBtn {
+    background: #ffc400;
+    border: none;
+    padding: 10px;
+    border-radius: 999px;
+    margin-top: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    font-size: 14px;
+}
+#downloadBtn:hover, #resetBtn:hover {
+    background: #ffb000;
+}
+#resetBtn {
+    background: #e0e3ea;
+}
+#resetBtn:hover {
+    background: #c7ccd8;
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+    background: #003f91;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    margin-top: 24px;
+    font-size: 13px;
+}
+
+/* Animación */
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(-3px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+/* Mobile tweaks */
+@media (max-width: 600px){
+    header h1 {
+        font-size: 20px;
+    }
+    .container {
+        padding: 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <!-- Puedes cambiar esta URL por el logo real de la institución si lo tienes en línea -->
+    <img id="logo" src="https://i.imgur.com/IRkh5xL.png" alt="Logo ENS Gabriela Mistral">
+    <h1>PEI Comunitario – ENS Gabriela Mistral</h1>
+    <div class="subtitulo">Presentación interactiva del componente comunitario</div>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>📘 Bienvenida</h2>
+        <p>
+            Esta aplicación web acompaña la exposición del componente comunitario del PEI de la 
+            Escuela Normal Superior Gabriela Mistral de Orito – Putumayo. 
+            Permite a los asistentes explorar la información por secciones y participar en una breve
+            encuesta sobre prioridades institucionales.
+        </p>
+        <p style="font-size:13px; color:#555;">
+            Sugerencia para el expositor: pide a los asistentes que ingresen al enlace desde su celular, 
+            y utiliza la pantalla principal para proyectar los resultados y navegar las secciones.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>🔎 Explorador del componente comunitario</h2>
+
+        <button class="section-btn" onclick="toggleSection('s1')">
+            <span>Componentes comunitarios</span><span class="icon">▾</span>
+        </button>
+        <div id="s1" class="section-content">
+            <p>
+                El componente comunitario visibiliza la interacción de la ENS Gabriela Mistral con la comunidad 
+                del Bajo Putumayo y el sector productivo, con énfasis en:
+            </p>
+            <ul>
+                <li>Conciencia social y compromiso con la transformación del territorio.</li>
+                <li>Participación comunitaria, solidaridad y trabajo colaborativo.</li>
+                <li>Formación de docentes con enfoque social, intercultural y amazónico.</li>
+                <li>Alianzas y convenios para responder a necesidades locales y regionales.</li>
+            </ul>
+        </div>
+
+        <button class="section-btn" onclick="toggleSection('s2')">
+            <span>Organizaciones activas del Bajo Putumayo</span><span class="icon">▾</span>
+        </button>
+        <div id="s2" class="section-content">
+            <p>Algunas organizaciones clave para el trabajo comunitario son:</p>
+            <ul>
+                <li>Alianza Departamental de Mujeres Tejedoras de Vida.</li>
+                <li>Centro Nacional de Memoria Histórica y procesos de memoria local.</li>
+                <li>Organizaciones étnicas indígenas y afrodescendientes (Inga, Kamëntsá, FEDECAP, entre otras).</li>
+                <li>Fundaciones ambientales y entidades como Corpoamazonía y Parques Nacionales.</li>
+                <li>Emprendimientos y ferias que promueven productos amazónicos y economía local.</li>
+            </ul>
+        </div>
+
+        <button class="section-btn" onclick="toggleSection('s3')">
+            <span>Medios, sindicatos e instituciones</span><span class="icon">▾</span>
+        </button>
+        <div id="s3" class="section-content">
+            <p>Entre los actores que acompañan y fortalecen la labor educativa se encuentran:</p>
+            <ul>
+                <li>Emisoras comunitarias y medios locales que difunden información y cultura.</li>
+                <li>Sindicatos como la Unión Sindical Obrera (USO) vinculados al contexto petrolero.</li>
+                <li>CLOPAD, Defensa Civil, Cruz Roja, Bomberos, Policía y Ejército como instancias de apoyo.</li>
+                <li>Hospitales y entidades de salud que desarrollan acciones de promoción y prevención.</li>
+                <li>Parroquias, iglesias cristianas y Casa de la Cultura como espacios comunitarios.</li>
+            </ul>
+        </div>
+
+        <button class="section-btn" onclick="toggleSection('s4')">
+            <span>Estrategias culturales y pedagógicas</span><span class="icon">▾</span>
+        </button>
+        <div id="s4" class="section-content">
+            <p>Las estrategias buscan articular la escuela con las expresiones culturales, locales y regionales:</p>
+            <ul>
+                <li>Diálogo intercultural y círculos de saberes con comunidades indígenas y afrodescendientes.</li>
+                <li>Reconocimiento de festividades locales, carnavales y prácticas como la minga.</li>
+                <li>Inclusión de saberes ancestrales, medicina tradicional y cosmovisiones amazónicas.</li>
+                <li>Uso de materiales educativos interculturales que representen la diversidad del territorio.</li>
+                <li>Promoción de la empatía, el respeto y la participación activa de los estudiantes.</li>
+            </ul>
+        </div>
+
+        <button class="section-btn" onclick="toggleSection('s5')">
+            <span>Proyectos, semilleros y convenios</span><span class="icon">▾</span>
+        </button>
+        <div id="s5" class="section-content">
+            <p>La ENS Gabriela Mistral fortalece su proyección comunitaria mediante:</p>
+            <ul>
+                <li>Proyectos CRECE, PTA y transversales en convivencia, medio ambiente, lectura e inclusión.</li>
+                <li>Proyectos institucionales y semilleros de investigación articulados al Programa de Formación Complementaria.</li>
+                <li>Articulación con SENA, UNISALLE, ENSUP, UNIPUTUMAYO y otras entidades educativas.</li>
+                <li>Convenios con organizaciones gubernamentales y no gubernamentales para la formación docente y la educación ambiental.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🗺️ Mapa vivo de aliados y actores</h2>
+        <p style="font-size:14px;">
+            Toca cada bloque para ver el rol de cada entidad en el trabajo comunitario de la ENS Gabriela Mistral.
+        </p>
+
+        <div class="map-grid">
+            <div class="chip" onclick="showInfo('m1')">SENA</div>
+            <div class="chip" onclick="showInfo('m2')">Corpoamazonía</div>
+            <div class="chip" onclick="showInfo('m3')">UNISALLE</div>
+            <div class="chip" onclick="showInfo('m4')">Tejedoras de Vida</div>
+            <div class="chip" onclick="showInfo('m5')">FEDECAP</div>
+            <div class="chip" onclick="showInfo('m6')">E.S.E. Hospital</div>
+            <div class="chip" onclick="showInfo('m7')">Cruz Roja</div>
+            <div class="chip" onclick="showInfo('m8')">Bomberos</div>
+        </div>
+
+        <div id="m1" class="chip-info">Formación técnica y articulación con la media para fortalecer competencias laborales y emprendimiento.</div>
+        <div id="m2" class="chip-info">Educación ambiental, protección de la Amazonía y proyectos de conservación en el territorio.</div>
+        <div id="m3" class="chip-info">Formación inicial y continua de docentes, investigación y acompañamiento académico.</div>
+        <div id="m4" class="chip-info">Red de mujeres que promueve derechos humanos, construcción de paz y liderazgo comunitario.</div>
+        <div id="m5" class="chip-info">Organización de comunidades afrodescendientes que aporta a la identidad y al trabajo comunitario.</div>
+        <div id="m6" class="chip-info">Campañas de salud, prevención, promoción del bienestar y acompañamiento a la comunidad educativa.</div>
+        <div id="m7" class="chip-info">Apoyo en emergencias, formación en primeros auxilios y fortalecimiento de la cultura de cuidado.</div>
+        <div id="m8" class="chip-info">Gestión del riesgo, atención a desastres y procesos formativos en seguridad y prevención.</div>
+    </div>
+
+    <div class="card">
+        <h2>📊 Encuesta interactiva</h2>
+        <p style="font-size:14px;">
+            Marca, desde tu percepción, cuál debería ser la prioridad para fortalecer el componente comunitario en los próximos años.
+        </p>
+
+        <div class="survey-box">
+            <p><b>¿Qué estrategia consideras que debe fortalecerse primero?</b></p>
+
+            <button class="option-btn" onclick="vote(0)">Inclusión (PIAR e interculturalidad)</button>
+            <button class="option-btn" onclick="vote(1)">Convenios y aliados estratégicos</button>
+            <button class="option-btn" onclick="vote(2)">Proyectos transversales y semilleros</button>
+            <button class="option-btn" onclick="vote(3)">Emprendimiento y formación para el trabajo</button>
+
+            <div id="results" class="results">
+                <h3>Resultados en vivo</h3>
+
+                <div class="results-row">
+                    Inclusión (PIAR e interculturalidad)
+                    <div class="bar-wrapper">
+                        <div id="bar0" class="bar" style="width:0%"></div>
+                    </div>
+                </div>
+
+                <div class="results-row">
+                    Convenios y aliados estratégicos
+                    <div class="bar-wrapper">
+                        <div id="bar1" class="bar" style="width:0%"></div>
+                    </div>
+                </div>
+
+                <div class="results-row">
+                    Proyectos transversales y semilleros
+                    <div class="bar-wrapper">
+                        <div id="bar2" class="bar" style="width:0%"></div>
+                    </div>
+                </div>
+
+                <div class="results-row">
+                    Emprendimiento y formación para el trabajo
+                    <div class="bar-wrapper">
+                        <div id="bar3" class="bar" style="width:0%"></div>
+                    </div>
+                </div>
+
+                <button id="downloadBtn" onclick="downloadResults()">Descargar resultados (.txt)</button>
+                <button id="resetBtn" onclick="resetVotes()">Reiniciar encuesta</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    ENS Gabriela Mistral – Orito, Putumayo · Componente comunitario del PEI<br>
+    Herramienta interactiva presentada por: Prof. Segundo Eduardo Rueda
+</footer>
+
+<script>
+// --------- TOGGLE SECCIONES ---------
+function toggleSection(id){
+    const sec = document.getElementById(id);
+    if(!sec) return;
+    sec.style.display = (sec.style.display === "block") ? "none" : "block";
+}
+
+// --------- MAPA INTERACTIVO ---------
+function showInfo(id){
+    document.querySelectorAll(".chip-info").forEach(el => el.style.display = "none");
+    const target = document.getElementById(id);
+    if(target){
+        target.style.display = "block";
+        target.scrollIntoView({behavior:"smooth", block:"center"});
+    }
+}
+
+// --------- ENCUESTA ---------
+let votes = [0,0,0,0];
+
+function vote(index){
+    if(index < 0 || index > 3) return;
+    votes[index]++;
+    document.getElementById("results").style.display = "block";
+    updateBars();
+}
+
+function updateBars(){
+    const total = votes.reduce((a,b)=>a+b,0);
+    for(let i=0;i<4;i++){
+        const bar = document.getElementById("bar"+i);
+        if(!bar) continue;
+        let percent = total === 0 ? 0 : (votes[i]/total)*100;
+        bar.style.width = percent + "%";
+    }
+}
+
+function downloadResults(){
+    const content = 
+`RESULTADOS DE LA ENCUESTA – PEI COMUNITARIO
+
+Inclusión (PIAR e interculturalidad): ${votes[0]} voto(s)
+Convenios y aliados estratégicos:     ${votes[1]} voto(s)
+Proyectos transversales y semilleros: ${votes[2]} voto(s)
+Emprendimiento y formación laboral:   ${votes[3]} voto(s)
+
+Generado automáticamente por la presentación interactiva del PEI Comunitario.`;
+
+    const blob = new Blob([content], {type:"text/plain"});
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "resultados_encuesta_pei_comunitario.txt";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function resetVotes(){
+    votes = [0,0,0,0];
+    updateBars();
+}
+</script>
+
+</body>
+</html>
