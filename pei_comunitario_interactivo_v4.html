@@ -741,13 +741,14 @@ import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://w
 const firebaseConfig = {
   apiKey: "AIzaSyCbZy0Y90YpF_u0KPitL82q_NM0R2oEY24",
   authDomain: "pei-comunitario-ensgm.firebaseapp.com",
+  databaseURL: "https://pei-comunitario-ensgm-default-rtdb.firebaseio.com",
   projectId: "pei-comunitario-ensgm",
   storageBucket: "pei-comunitario-ensgm.firebasestorage.app",
   messagingSenderId: "498361581736",
   appId: "1:498361581736:web:34be1f0a8abc6658a5c29d",
   measurementId: "G-7LWXSDTR8E"
-
 };
+
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
