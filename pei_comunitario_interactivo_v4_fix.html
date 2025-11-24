@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEI Comunitario – ENS Gabriela Mistral</title>
+<style>
+:root {
+    --azul-oscuro: #0066a6;
+    --azul-bandera: #37b7ff;
+    --amarillo-cinta: #ffc800;
+    --gris-fondo: #f2f4f8;
+    --texto-principal: #1f2933;
+}
+body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    background: var(--gris-fondo);
+    color: var(--texto-principal);
+}
+header {
+    background: linear-gradient(180deg, var(--azul-bandera) 0%, var(--azul-oscuro) 100%);
+    color: white;
+    padding: 20px 16px 18px 16px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+header h1 {
+    margin: 8px 0 0 0;
+    font-size: 24px;
+}
+#logo {
+    width: 90px;
+    height: 110px;
+    object-fit: contain;
+    margin-bottom: 4px;
+}
+.subtitulo {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 4px;
+    color: #eef6ff;
+    letter-spacing: 0.5px;
+}
+.flag-strip {
+    height: 10px;
+    background: linear-gradient(180deg, var(--azul-bandera) 0%, #ffffff 50%, #ffffff 100%);
+}
+.container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 16px;
+}
+.card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 16px 16px 18px 16px;
+    box-shadow: 0 2px 8px rgba(15,23,42,0.08);
+    margin-bottom: 20px;
+    border-top: 4px solid var(--azul-bandera);
+}
+.card h2 {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-top: 10px;
+}
+.gallery-item {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+}
+.gallery-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+.gallery-item h3 {
+    margin: 8px 0 4px 0;
+    font-size: 14px;
+}
+.gallery-item p {
+    margin: 0;
+    font-size: 12px;
+    color: #4b5563;
+}
+.section-btn {
+    width: 100%;
+    background: #ffffff;
+    border: 2px solid var(--azul-oscuro);
+    color: var(--azul-oscuro);
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s;
+}
+.section-btn span.icon {
+    font-size: 18px;
+}
+.section-btn:hover {
+    background: var(--azul-oscuro);
+    color: #ffffff;
+}
+.section-content {
+    display: none;
+    background: #ffffff;
+    padding: 12px 12px 10px 12px;
+    border-left: 2px solid var(--azul-oscuro);
+    border-right: 2px solid var(--azul-oscuro);
+    border-bottom: 2px solid var(--azul-oscuro);
+    border-radius: 0 0 10px 10px;
+    margin-bottom: 10px;
+    animation: fadeIn 0.22s ease-in;
+}
+.section-content ul {
+    padding-left: 20px;
+}
+.map-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(130px,1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+.chip {
+    background: var(--azul-oscuro);
+    color: white;
+    padding: 12px;
+    border-radius: 999px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    transition: 0.2s;
+}
+.chip:hover {
+    background: var(--azul-bandera);
+    transform: translateY(-1px);
+}
+.chip-info {
+    display: none;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-top: 10px;
+    font-size: 14px;
+    border: 1px solid #e5e7eb;
+}
+.chip-info h3 {
+    margin: 4px 0 4px 0;
+    font-size: 15px;
+}
+.chip-info ul {
+    margin: 4px 0 8px 18px;
+    padding: 0;
+}
+.ally-impact {
+    margin-top: 4px;
+    font-size: 12px;
+}
+.ally-impact-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+}
+.ally-impact-bar-wrap {
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+    height: 10px;
+}
+.ally-impact-bar {
+    height: 10px;
+    background: var(--amarillo-cinta);
+    border-radius: 999px;
+}
+.survey-box {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+}
+.option-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 9px 10px;
+    background: var(--azul-oscuro);
+    color:white;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: 0.2s;
+}
+.option-btn:hover {
+    background: var(--azul-bandera);
+}
+.results {
+    margin-top: 14px;
+    display: none;
+}
+.results-row {
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+.bar-wrapper {
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+    height: 16px;
+}
+.bar {
+    height: 16px;
+    background: var(--amarillo-cinta);
+    border-radius: 999px;
+    transition: width 0.3s;
+}
+#downloadBtn, #resetBtn {
+    background: var(--amarillo-cinta);
+    border: none;
+    padding: 9px 10px;
+    border-radius: 999px;
+    margin-top: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    font-size: 13px;
+}
+#downloadBtn:hover, #resetBtn:hover {
+    background: #ffb400;
+}
+#resetBtn {
+    background: #e5e7eb;
+}
+#resetBtn:hover {
+    background: #d1d5db;
+}
+.survey-secondary {
+    margin-top: 16px;
+    border-top: 1px dashed #d1d5db;
+    padding-top: 10px;
+}
+.survey-secondary h4 {
+    margin: 4px 0 6px 0;
+    font-size: 14px;
+}
+.wall-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.wall-form select,
+.wall-form textarea,
+.wall-form input {
+    font-family: inherit;
+    font-size: 13px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+}
+.wall-form textarea {
+    resize: vertical;
+    min-height: 70px;
+}
+.wall-btn {
+    align-self: flex-end;
+    background: var(--azul-oscuro);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.wall-btn:hover {
+    background: var(--azul-bandera);
+}
+.wall-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 10px;
+}
+.wall-item {
+    background: #f9fafb;
+    border-radius: 10px;
+    padding: 8px 10px;
+    border-left: 4px solid var(--azul-bandera);
+    font-size: 13px;
+}
+.wall-item-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 12px;
+    margin-bottom: 4px;
+    color: #374151;
+}
+.wall-item-body {
+    font-size: 13px;
+}
+.indicators {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+    font-size: 12px;
+}
+.indicator-pill {
+    background: #e5f3ff;
+    border-radius: 999px;
+    padding: 5px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid #bfdbfe;
+}
+.indicator-pill span.value {
+    font-weight: 700;
+}
+footer {
+    background: var(--azul-oscuro);
+    color: white;
+    text-align: center;
+    padding: 14px 10px;
+    margin-top: 24px;
+    font-size: 13px;
+}
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(-3px);}
+    to {opacity:1; transform: translateY(0);}
+}
+@media (max-width: 600px){
+    header h1 {
+        font-size: 20px;
+    }
+    .container {
+        padding: 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img id="logo" src="escudo.png" alt="Escudo ENS Gabriela Mistral">
+    <h1>PEI Comunitario – ENS Gabriela Mistral</h1>
+    <div class="subtitulo">Presentación interactiva del componente comunitario</div>
+</header>
+<div class="flag-strip"></div>
+
+<div class="container">
+
+    <div class="card">
+        <h2>📘 Bienvenida</h2>
+        <p>
+            Esta aplicación web acompaña la exposición del componente comunitario del PEI de la 
+            Escuela Normal Superior Gabriela Mistral de Orito – Putumayo. 
+            Permite a los asistentes explorar la información por secciones, reconocer los aliados del territorio
+            y participar en una breve encuesta y un muro de aportes.
+        </p>
+        <p style="font-size:13px; color:#4b5563;">
+            Sugerencia para el expositor: pide a los asistentes que ingresen al enlace desde su celular 
+            y utiliza la pantalla principal para proyectar las secciones y los resultados. Los aportes 
+            se sincronizan en tiempo real usando una base de datos en la nube.
+        </p>
+        <div class="indicators">
+            <div class="indicator-pill">🗳️ Votos registrados (local): <span id="votesTotal" class="value">0</span></div>
+            <div class="indicator-pill">💬 Aportes en el muro (global): <span id="wallTotal" class="value">0</span></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🏳️ Símbolos institucionales</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="bandera.png" alt="Bandera ENS Gabriela Mistral">
+                <h3>Bandera institucional</h3>
+                <p>Colores que representan la identidad de la ENS Gabriela Mistral y su territorio amazónico.</p>
+            </div>
+            <div class="gallery-item">
+                <img src="escudo.png" alt="Escudo ENS Gabriela Mistral">
+                <h3>Escudo institucional</h3>
+                <p>Símbolos de sabiduría, paz y liderazgo como pilares de la formación docente.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🔎 Explorador del componente comunitario</h2>
+
+        <button class="section-btn" onclick="toggleSection('s1')">
+            <span>Componentes comunitarios</span><span class="icon">▾</span>
+        </button>
+        <div id="s1" class="section-content">
+            <p>
+                El componente comunitario visibiliza la interacción de la ENS Gabriela Mistral con la comunidad 
+                del Bajo Putumayo y el sector productivo, con énfasis en:
+            </p>
+            <ul>
+                <li>Conciencia social y compromiso con la transformación del territorio.</li>
+                <li>Participación comunitaria, solidaridad y trabajo colaborativo.</li>
+                <li>Formación de docentes con enfoque social, intercultural y amazónico.</li>
+                <li>Alianzas y convenios para responder a necesidades locales y regionales.</li>
+            </ul>
+        </div>
+
+        <button class="section-btn" onclick="toggleSection('s2')">
+            <span>Organizaciones activas del Bajo Putumayo</span><span class="icon">▾</span>
+        </button>
+        <div id="s2" class="section-content">
+            <p>Algunas organizaciones clave para el trabajo comunitario son:</p>
+            <ul>
+                <li>Alianza Departamental de Mujeres Tejedoras de Vida.</li>
+                <li>Centro Nacional de Memoria Histórica y procesos de memoria local.</li>
+                <li>Organizaciones étnicas indígenas y afrodescendientes (Inga, Kamëntsá, FEDECAP, entre otras).</li>
+                <li>Fundaciones ambientales y entidades como Corpoamazonía y Parques Nacionales.</li>
+                <li>Emprendimientos y ferias que promueven productos amazónicos y economía local.</li>
+            </ul>
+        </div>
+
+        <button class="section-btn" onclick="toggleSection('s3')">
+            <span>Medios, sindicatos e instituciones</span><span class="icon">▾</span>
+        </button>
+        <div id="s3" class="section-content">
+            <p>Entre los actores que acompañan y fortalecen la labor educativa se encuentran:</p>
+            <ul>
+                <li>Emisoras comunitarias y medios locales que difunden información y cultura.</li>
+                <li>Sindicatos como la Unión Sindical Obrera (USO) vinculados al contexto petrolero.</li>
+                <li>CLOPAD, Defensa Civil, Cruz Roja, Bomberos, Policía y Ejército como instancias de apoyo.</li>
+                <li>Hospitales y entidades de salud que desarrollan acciones de promoción y prevención.</li>
+                <li>Parroquias, iglesias cristianas y Casa de la Cultura como espacios comunitarios.</li>
+            </ul>
+        </div>
+
+        <button class="section-btn" onclick="toggleSection('s4')">
+            <span>Estrategias culturales y pedagógicas</span><span class="icon">▾</span>
+        </button>
+        <div id="s4" class="section-content">
+            <p>Las estrategias buscan articular la escuela con las expresiones culturales, locales y regionales:</p>
+            <ul>
+                <li>Diálogo intercultural y círculos de saberes con comunidades indígenas y afrodescendientes.</li>
+                <li>Reconocimiento de festividades locales, carnavales y prácticas como la minga.</li>
+                <li>Inclusión de saberes ancestrales, medicina tradicional y cosmovisiones amazónicas.</li>
+                <li>Uso de materiales educativos interculturales que representen la diversidad del territorio.</li>
+                <li>Promoción de la empatía, el respeto y la participación activa de los estudiantes.</li>
+            </ul>
+        </div>
+
+        <button class="section-btn" onclick="toggleSection('s5')">
+            <span>Proyectos, semilleros y convenios</span><span class="icon">▾</span>
+        </button>
+        <div id="s5" class="section-content">
+            <p>La ENS Gabriela Mistral fortalece su proyección comunitaria mediante:</p>
+            <ul>
+                <li>Proyectos CRECE, PTA y transversales en convivencia, medio ambiente, lectura e inclusión.</li>
+                <li>Proyectos institucionales y semilleros de investigación articulados al Programa de Formación Complementaria.</li>
+                <li>Articulación con SENA, UNISALLE, ENSUP, UNIPUTUMAYO y otras entidades educativas.</li>
+                <li>Convenios con organizaciones gubernamentales y no gubernamentales para la formación docente y la educación ambiental.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🗺️ Mapa vivo de aliados y actores</h2>
+        <p style="font-size:14px;">
+            Toca cada bloque para ver el rol de cada entidad en el trabajo comunitario de la ENS Gabriela Mistral.
+        </p>
+
+        <div class="map-grid">
+            <div class="chip" onclick="showInfo('m1')">SENA</div>
+            <div class="chip" onclick="showInfo('m2')">Corpoamazonía</div>
+            <div class="chip" onclick="showInfo('m3')">UNISALLE</div>
+            <div class="chip" onclick="showInfo('m4')">Tejedoras de Vida</div>
+            <div class="chip" onclick="showInfo('m5')">FEDECAP</div>
+            <div class="chip" onclick="showInfo('m6')">E.S.E. Hospital</div>
+            <div class="chip" onclick="showInfo('m7')">Cruz Roja</div>
+            <div class="chip" onclick="showInfo('m8')">Bomberos</div>
+        </div>
+
+        <div id="m1" class="chip-info">
+            <h3>SENA – Programas en la ENSGM</h3>
+            <ul>
+                <li>Programa técnico en <b>Auxiliar Administrativo</b>.</li>
+                <li>Programa técnico en <b>Emprendimiento</b>.</li>
+                <li>Acompañamiento a proyectos productivos escolares.</li>
+                <li>Articulación con media y formación para el trabajo.</li>
+            </ul>
+            <div class="ally-impact">
+                <div class="ally-impact-label">
+                    <span>Formación para el trabajo</span><span>90%</span>
+                </div>
+                <div class="ally-impact-bar-wrap"><div class="ally-impact-bar" style="width:90%"></div></div>
+            </div>
+            <div class="ally-impact">
+                <div class="ally-impact-label">
+                    <span>Emprendimiento estudiantil</span><span>85%</span>
+                </div>
+                <div class="ally-impact-bar-wrap"><div class="ally-impact-bar" style="width:85%"></div></div>
+            </div>
+        </div>
+
+        <div id="m2" class="chip-info">
+            <h3>Corpoamazonía</h3>
+            <ul>
+                <li>Procesos de educación ambiental en el Bajo Putumayo.</li>
+                <li>Acompañamiento a proyectos de biodiversidad y conservación.</li>
+                <li>Apoyo en jornadas pedagógicas sobre protección de la Amazonía.</li>
+            </ul>
+            <div class="ally-impact">
+                <div class="ally-impact-label">
+                    <span>Educación ambiental</span><span>88%</span>
+                </div>
+                <div class="ally-impact-bar-wrap"><div class="ally-impact-bar" style="width:88%"></div></div>
+            </div>
+        </div>
+
+        <div id="m3" class="chip-info">
+            <h3>UNISALLE</h3>
+            <ul>
+                <li>Formación inicial y continua de docentes.</li>
+                <li>Acompañamiento a procesos de investigación educativa.</li>
+                <li>Espacios de reflexión pedagógica y práctica docente.</li>
+            </ul>
+            <div class="ally-impact">
+                <div class="ally-impact-label">
+                    <span>Actualización docente</span><span>92%</span>
+                </div>
+                <div class="ally-impact-bar-wrap"><div class="ally-impact-bar" style="width:92%"></div></div>
+            </div>
+        </div>
+
+        <div id="m4" class="chip-info">
+            <h3>Alianza Tejedoras de Vida</h3>
+            <ul>
+                <li>Promoción de derechos de las mujeres en el territorio.</li>
+                <li>Procesos de memoria, tejido social y paz territorial.</li>
+                <li>Actividades formativas con estudiantes y familias.</li>
+            </ul>
+        </div>
+
+        <div id="m5" class="chip-info">
+            <h3>FEDECAP y organizaciones afro</h3>
+            <ul>
+                <li>Fortalecimiento de la identidad afrodescendiente.</li>
+                <li>Procesos organizativos comunitarios en el Bajo Putumayo.</li>
+                <li>Acompañamiento a cátedra de estudios afro y etnoeducación.</li>
+            </ul>
+        </div>
+
+        <div id="m6" class="chip-info">
+            <h3>E.S.E. Hospital – Estrategias de salud</h3>
+            <ul>
+                <li>Estrategias de <b>tamizaje socioemocional</b> con estudiantes.</li>
+                <li>Campañas de promoción y prevención en salud integral.</li>
+                <li>Trabajo articulado en jornadas de bienestar escolar.</li>
+            </ul>
+            <div class="ally-impact">
+                <div class="ally-impact-label">
+                    <span>Bienestar socioemocional</span><span>87%</span>
+                </div>
+                <div class="ally-impact-bar-wrap"><div class="ally-impact-bar" style="width:87%"></div></div>
+            </div>
+        </div>
+
+        <div id="m7" class="chip-info">
+            <h3>Cruz Roja</h3>
+            <ul>
+                <li>Apoyo en emergencias y acompañamiento psicosocial.</li>
+                <li>Formación básica en primeros auxilios.</li>
+                <li>Participación en simulacros y campañas humanitarias.</li>
+            </ul>
+        </div>
+
+        <div id="m8" class="chip-info">
+            <h3>Bomberos – Primeros auxilios y prevención</h3>
+            <ul>
+                <li>Capacitaciones en <b>primeros auxilios básicos</b>.</li>
+                <li>Simulacros de evacuación y manejo de emergencias.</li>
+                <li>Charlas sobre uso adecuado de extintores y prevención de incendios.</li>
+            </ul>
+            <div class="ally-impact">
+                <div class="ally-impact-label">
+                    <span>Gestión del riesgo</span><span>89%</span>
+                </div>
+                <div class="ally-impact-bar-wrap"><div class="ally-impact-bar" style="width:89%"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📊 Encuesta interactiva</h2>
+        <p style="font-size:14px;">
+            Marca, desde tu percepción, cuál debería ser la prioridad para fortalecer el componente comunitario
+            en los próximos años. (Los votos se almacenan solo en el dispositivo que proyectas).
+        </p>
+
+        <div class="survey-box">
+            <p><b>Pregunta 1. ¿Qué estrategia debe fortalecerse primero?</b></p>
+
+            <button class="option-btn" onclick="vote(0)">Inclusión (PIAR e interculturalidad)</button>
+            <button class="option-btn" onclick="vote(1)">Convenios y aliados estratégicos</button>
+            <button class="option-btn" onclick="vote(2)">Proyectos transversales y semilleros</button>
+            <button class="option-btn" onclick="vote(3)">Emprendimiento y formación para el trabajo</button>
+
+            <div class="survey-secondary">
+                <h4>Pregunta 2. ¿Qué actor debe reforzar su presencia en la ENS?</h4>
+                <button class="option-btn" onclick="voteSecondary(0)">Organizaciones étnicas</button>
+                <button class="option-btn" onclick="voteSecondary(1)">Sector productivo local</button>
+                <button class="option-btn" onclick="voteSecondary(2)">Universidades aliadas</button>
+                <button class="option-btn" onclick="voteSecondary(3)">Entidades de cultura y memoria</button>
+            </div>
+
+            <div id="results" class="results">
+                <h3>Resultados en vivo (dispositivo actual)</h3>
+
+                <div class="results-row">
+                    Inclusión (PIAR e interculturalidad)
+                    <div class="bar-wrapper">
+                        <div id="bar0" class="bar" style="width:0%"></div>
+                    </div>
+                </div>
+
+                <div class="results-row">
+                    Convenios y aliados estratégicos
+                    <div class="bar-wrapper">
+                        <div id="bar1" class="bar" style="width:0%"></div>
+                    </div>
+                </div>
+
+                <div class="results-row">
+                    Proyectos transversales y semilleros
+                    <div class="bar-wrapper">
+                        <div id="bar2" class="bar" style="width:0%"></div>
+                    </div>
+                </div>
+
+                <div class="results-row">
+                    Emprendimiento y formación para el trabajo
+                    <div class="bar-wrapper">
+                        <div id="bar3" class="bar" style="width:0%"></div>
+                    </div>
+                </div>
+
+                <div class="results-row">
+                    Organizaciones étnicas
+                    <div class="bar-wrapper">
+                        <div id="barS0" class="bar" style="width:0%"></div>
+                    </div>
+                </div>
+                <div class="results-row">
+                    Sector productivo local
+                    <div class="bar-wrapper">
+                        <div id="barS1" class="bar" style="width:0%"></div>
+                    </div>
+                </div>
+                <div class="results-row">
+                    Universidades aliadas
+                    <div class="bar-wrapper">
+                        <div id="barS2" class="bar" style="width:0%"></div>
+                    </div>
+                </div>
+                <div class="results-row">
+                    Entidades de cultura y memoria
+                    <div class="bar-wrapper">
+                        <div id="barS3" class="bar" style="width:0%"></div>
+                    </div>
+                </div>
+
+                <button id="downloadBtn" onclick="downloadResults()">Descargar resultados (.txt)</button>
+                <button id="resetBtn" onclick="resetVotes()">Reiniciar encuesta</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>💬 Muro de aportes comunitarios</h2>
+        <p style="font-size:14px;">
+            Pide a los asistentes que se conecten al enlace y registren aquí sus propuestas y compromisos.
+            Los aportes se comparten en tiempo real entre todos los dispositivos conectados.
+        </p>
+
+        <div class="wall-form">
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <select id="wallRole">
+                    <option value="Docente">Docente</option>
+                    <option value="Estudiante">Estudiante</option>
+                    <option value="Padre de familia">Padre de familia</option>
+                    <option value="Egresado(a)">Egresado(a)</option>
+                    <option value="Aliado comunitario">Aliado comunitario</option>
+                </select>
+                <input id="wallName" type="text" placeholder="Nombre (opcional)">
+            </div>
+            <textarea id="wallText" placeholder="Escribe aquí la propuesta, compromiso o aporte comunitario..."></textarea>
+            <button class="wall-btn" onclick="addWallItem()">Agregar aporte</button>
+        </div>
+
+        <div id="wallList" class="wall-list">
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    ENS Gabriela Mistral – Orito, Putumayo · Componente comunitario del PEI<br>
+    Herramienta interactiva presentada por: Prof. Segundo Eduardo Rueda
+</footer>
+
+<script type="module">
+// ============================
+// 1. CONFIGURACIÓN FIREBASE
+// ============================
+// 1) Ve a https://console.firebase.google.com
+// 2) Crea un proyecto (por ejemplo: pei-comunitario-ensgm)
+// 3) Agrega una app Web ("</>")
+// 4) Copia el objeto firebaseConfig que te da Firebase
+// 5) PEGA tu firebaseConfig AQUÍ abajo, reemplazando el objeto de ejemplo.
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+// ⚠️ REEMPLAZA ESTE OBJETO POR EL QUE TE ENTREGA FIREBASE
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCbZy0Y90YpF_u0KPitL82q_NM0R2oEY24",
+  authDomain: "pei-comunitario-ensgm.firebaseapp.com",
+  databaseURL: "https://pei-comunitario-ensgm-default-rtdb.firebaseio.com",
+  projectId: "pei-comunitario-ensgm",
+  storageBucket: "pei-comunitario-ensgm.appspot.com",
+  messagingSenderId: "498361581736",
+  appId: "1:498361581736:web:34be1f0a8abc6658a5c29d",
+  measurementId: "G-7LWXSDTR8E"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const aportesRef = ref(db, "aportes_pei");
+
+// ============================
+// 2. LÓGICA GENERAL (SECCIONES, MAPA, ENCUESTA)
+// ============================
+
+let votes = [0,0,0,0];
+let votesSecondary = [0,0,0,0];
+let totalVotes = 0;
+let wallCount = 0;
+
+function updateIndicators(){
+    const votesTotalEl = document.getElementById("votesTotal");
+    const wallTotalEl = document.getElementById("wallTotal");
+    if (votesTotalEl) votesTotalEl.textContent = totalVotes;
+    if (wallTotalEl) wallTotalEl.textContent = wallCount;
+}
+
+function toggleSection(id){
+    const sec = document.getElementById(id);
+    if(!sec) return;
+    sec.style.display = (sec.style.display === "block") ? "none" : "block";
+}
+function showInfo(id){
+    document.querySelectorAll(".chip-info").forEach(el => el.style.display = "none");
+    const target = document.getElementById(id);
+    if(target){
+        target.style.display = "block";
+        target.scrollIntoView({behavior:"smooth", block:"center"});
+    }
+}
+function vote(index){
+    if(index < 0 || index > 3) return;
+    votes[index]++;
+    totalVotes++;
+    const res = document.getElementById("results");
+    if(res) res.style.display = "block";
+    updateBars();
+    updateIndicators();
+}
+function voteSecondary(index){
+    if(index < 0 || index > 3) return;
+    votesSecondary[index]++;
+    totalVotes++;
+    const res = document.getElementById("results");
+    if(res) res.style.display = "block";
+    updateBars();
+    updateIndicators();
+}
+function updateBars(){
+    const totalPrimary = votes.reduce((a,b)=>a+b,0);
+    const totalSecondary = votesSecondary.reduce((a,b)=>a+b,0);
+    for(let i=0;i<4;i++){
+        const bar = document.getElementById("bar"+i);
+        if(bar){
+            let percent = totalPrimary === 0 ? 0 : (votes[i]/totalPrimary)*100;
+            bar.style.width = percent + "%";
+        }
+    }
+    for(let i=0;i<4;i++){
+        const barS = document.getElementById("barS"+i);
+        if(barS){
+            let percentS = totalSecondary === 0 ? 0 : (votesSecondary[i]/totalSecondary)*100;
+            barS.style.width = percentS + "%";
+        }
+    }
+}
+function downloadResults(){
+    const content = 
+`RESULTADOS DE LA ENCUESTA – PEI COMUNITARIO
+
+PREGUNTA 1. ¿Qué estrategia debe fortalecerse primero?
+- Inclusión (PIAR e interculturalidad): ${votes[0]} voto(s)
+- Convenios y aliados estratégicos:     ${votes[1]} voto(s)
+- Proyectos transversales y semilleros: ${votes[2]} voto(s)
+- Emprendimiento y formación laboral:   ${votes[3]} voto(s)
+
+PREGUNTA 2. ¿Qué actor debe reforzar su presencia en la ENS?
+- Organizaciones étnicas:               ${votesSecondary[0]} voto(s)
+- Sector productivo local:              ${votesSecondary[1]} voto(s)
+- Universidades aliadas:                ${votesSecondary[2]} voto(s)
+- Entidades de cultura y memoria:       ${votesSecondary[3]} voto(s)
+
+Total de interacciones registradas (dispositivo actual): ${totalVotes}
+
+Generado automáticamente por la presentación interactiva del PEI Comunitario.`;
+
+    const blob = new Blob([content], {type:"text/plain"});
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "resultados_encuesta_pei_comunitario.txt";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+function resetVotes(){
+    votes = [0,0,0,0];
+    votesSecondary = [0,0,0,0];
+    totalVotes = 0;
+    updateBars();
+    updateIndicators();
+}
+
+// ============================
+// 3. MURO DE APORTES (FIREBASE)
+// ============================
+
+function renderWallItem(data){
+    const listEl = document.getElementById("wallList");
+    if(!listEl || !data) return;
+
+    const role = data.role || "Participante";
+    const name = (data.name || "").trim();
+    const text = data.text || "";
+    const label = name ? (name + " · " + role) : role;
+
+    const item = document.createElement("div");
+    item.className = "wall-item";
+
+    const header = document.createElement("div");
+    header.className = "wall-item-header";
+
+    const spanLabel = document.createElement("span");
+    spanLabel.textContent = label;
+
+    const spanNum = document.createElement("span");
+    wallCount++;
+    spanNum.textContent = "#" + wallCount;
+
+    header.appendChild(spanLabel);
+    header.appendChild(spanNum);
+
+    const body = document.createElement("div");
+    body.className = "wall-item-body";
+    body.textContent = text;
+
+    item.appendChild(header);
+    item.appendChild(body);
+
+    listEl.prepend(item);
+    updateIndicators();
+}
+
+// Escucha en tiempo real: cada nuevo aporte en la BD aparece en pantalla
+onChildAdded(aportesRef, (snapshot) => {
+    const data = snapshot.val();
+    renderWallItem(data);
+});
+
+function addWallItem(){
+    const textEl = document.getElementById("wallText");
+    const roleEl = document.getElementById("wallRole");
+    const nameEl = document.getElementById("wallName");
+
+    if(!textEl || !roleEl) return;
+
+    const text = (textEl.value || "").trim();
+    if(!text){
+        alert("Escribe primero el aporte antes de agregarlo.");
+        return;
+    }
+
+    const role = roleEl.value || "Participante";
+    const name = (nameEl.value || "").trim();
+
+    const nuevoAporte = {
+        text: text,
+        role: role,
+        name: name,
+        ts: serverTimestamp()
+    };
+
+    push(aportesRef, nuevoAporte)
+        .then(() => {
+            textEl.value = "";
+            // dejamos el rol y el nombre por si la misma persona quiere escribir más
+        })
+        .catch((err) => {
+            console.error("Error guardando aporte:", err);
+            alert("No se pudo guardar el aporte. Revisa tu conexión a internet.");
+        });
+}
+
+// ============================
+// 4. EXPONE FUNCIONES AL HTML (onclick)
+// ============================
+window.toggleSection = toggleSection;
+window.showInfo = showInfo;
+window.vote = vote;
+window.voteSecondary = voteSecondary;
+window.downloadResults = downloadResults;
+window.resetVotes = resetVotes;
+window.addWallItem = addWallItem;
+
+// Inicializar indicadores al cargar
+updateIndicators();
+
+</script>
+
+</body>
+</html>
